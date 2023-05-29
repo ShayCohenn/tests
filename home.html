@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/table_style.css">
+    <link rel="stylesheet" href="../css/navbar_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="recet-books-container">
+        <h1 style="color:white">Stats:</h1>
+        <div class="stats-wrapper">
+            <hr>
+            <div class="stat-card">
+                <a href="loans/all_loans.html" target="main">
+                    <h2>Loans:</h2>
+                </a>
+                <ul>
+                    <li>
+                        <h4 id="tot_loans"></h4>
+                    </li>
+                    <li>
+                        <h4 id="act_loans"></h4>
+                    </li>
+                    <li>
+                        <h4 id="lat_loans"></h4>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="stat-card">
+                <a href="customers/all_customers.html" target="main">
+                    <h2>Customers:</h2>
+                </a>
+                <ul>
+                    <li>
+                        <h4 id="tot_cust"></h4>
+                    </li>
+                    <li>
+                        <h4 id="act_cust"></h4>
+                    </li>
+                    <li>
+                        <h4 id="inact_cust"></h4>
+                    </li>
+                    <li>
+                        <h4 id="cust_with_loans"></h4>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="stat-card">
+                <a href="books/all_books.html" target="main">
+                    <h2>Books:</h2>
+                </a>
+                <ul>
+                    <li>
+                        <h4 id="tot_books"></h4>
+                    </li>
+                    <li>
+                        <h4 id="act_books"></h4>
+                    </li>
+                    <li>
+                        <h4 id="on_loan_books"></h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        const MY_SERVER = "http://127.0.0.1:5000"
+        // ----------------------- Loans display ------------------------
+        const loans_display = async () => {
+            const loans = await axios.get(MY_SERVER + "/loans/all")
+            total_loans = 0
+            active_loans = 0
+            late_loans = 0
+            const loans_data = loans.data.forEach(loan => {
+                total_loans++;
+                (loan.status != "returned") && active_loans++
+                (loan.status === "Late") && late_loans++
+            })
+            tot_loans.textContent = `${total_loans} Loans in total`;
+            act_loans.textContent = `${active_loans} Active loans`;
+            lat_loans.textContent = `${late_loans} Loans that are late`;
+            (late_loans > 0) && toast_error(`You have ${late_loans} loans that are LATE!`)
+        }
+        loans_display()
+        // ---------------------- Customers display ------------------------
+        const customers_display = async () => {
+            const customers = await axios.get(MY_SERVER + "/clients/all");
+            let loan_clientID = [] // Array for storing customers with active loan
+            let total_customers = 0;
+            let active_customers = 0;
+            let inactive_customers = 0;
+            let customers_with_loans = 0;
+
+            for (const customer of customers.data) {
+                total_customers++;
+                customer.status == "Active" ? active_customers++ : inactive_customers++;
+
+                const getLoans = async () => {
+                    const loans = await axios.get(MY_SERVER + "/loans/all");
+                    loans.data.forEach((loan) => {
+                        //if the customer id doesn't exist in the array push it in the array
+                        if ((!loan_clientID.some((clientId) => loan.client_id === clientId)) && loan.status != "returned") {
+                            loan_clientID.push(loan.client_id)
+                        }
+                    });
+                };
+                await getLoans();
+            }
+            customers_with_loans = loan_clientID.length 
+            tot_cust.textContent = `${total_customers} Customers in total`;
+            act_cust.textContent = `${active_customers} Active customers`;
+            inact_cust.textContent = `${inactive_customers} Inactive customers`;
+            cust_with_loans.textContent = `${customers_with_loans} Customers with active loans`
+        };
+        customers_display()
+        // --------------------------- Display books --------------------------------------
+        const book_display = async () => {
+            const books = await axios.get(MY_SERVER + "/books/all")
+            total_books = 0
+            active_books = 0
+            on_loan = 0
+            const books_data = books.data.forEach(book => {
+                total_books++;
+                (book.status === "Available") && active_books++
+                (book.status === "on loan") && on_loan++
+            })
+            tot_books.textContent = `${total_books} books in total`;
+            act_books.textContent = `${active_books} Books availavle for loan`;
+            on_loan_books.textContent = `${on_loan} Books are on loan`;
+            (late_loans > 0) && toast_error(`You have ${late_loans} loans that are LATE!`)
+        }
+        book_display()
+        // ----------------------------- Define toastify ------------------------- 
+        const toast_error = (message) => {
+            Toastify({
+                text: message,
+                duration: 3000, // Duration in milliseconds
+                close: true, // Show close button
+                gravity: "top", // Position the toast at the top of the page
+                position: "center", // Center the toast horizontally
+                backgroundColor: "#ff3333b1", // Set the background color
+                style: {
+                    color: "#000000", // Set the text color to white
+                    fontWeight: "bold"
+                }
+            }).showToast();
+        };
+    </script>
+</body>
+
+</html>

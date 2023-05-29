@@ -1,0 +1,36 @@
+.form-control {
+    background-color: transparent;
+    color: whitesmoke !important;
+}
+
+.form-control:focus {
+    background: transparent;
+}
+
+.form-control::placeholder{
+    color: rgb(126, 126, 126);
+}
+
+.form-label {
+    color: whitesmoke;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.type-selection{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.confirm, .submit-btn{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-btn button{
+    margin-top: 1rem;
+}

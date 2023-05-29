@@ -1,0 +1,165 @@
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.title {
+  text-align: center;
+  color: white;
+  margin: 30px auto 0;
+}
+
+.selection {
+  display: flex;
+}
+
+.search_wrapper {
+  width: 40%;
+  max-width: 600px;
+  margin: 50px auto 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.options {
+  padding: 0 30px 0 0;
+}
+
+.card {
+  padding: 0.3rem;
+  margin: 0.1rem;
+  outline: none;
+  border: 1px solid rgba(245, 245, 245, 0.6);
+  background: transparent;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: rgb(50, 50, 50);
+}
+
+.name {
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.author,
+.category,
+.ISBN,
+.type,
+.ID {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgb(168, 168, 168);
+}
+
+.content {
+  padding: 15px;
+  color: rgb(220, 220, 220);
+  border-radius: 7px;
+  border: 1px solid rgba(245, 245, 245, 0.6);
+}
+
+.content .search {
+  position: relative;
+}
+
+.search i {
+  top: 50%;
+  left: 15px;
+  color: #999;
+  font-size: 20px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+.search input {
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 17px;
+  padding: 0 20px 0 43px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: whitesmoke;
+}
+
+.content .options {
+  margin-top: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 7px;
+}
+
+.options::-webkit-scrollbar {
+  width: 7px;
+}
+
+.options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+.options::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+
+.options::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+}
+
+.options li:hover,
+li.selected {
+  font-weight: 550;
+}
+
+.dates {
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  margin: 50px auto 0;
+  font-size: 28px;
+}
+
+.dates input[type="date"] {
+  border-radius: 7px;
+  color: white;
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.form-check {
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 250px;
+}
+
+.btns {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  left: 50%;
+  transform: translate(-50%);
+  top: 250px;
+  max-width: 400px;
+}
+
+.btns button {
+  margin-top: 20px;
+  height: 60px;
+}
+
+.hide {
+  display: none;
+}

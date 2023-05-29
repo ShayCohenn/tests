@@ -1,0 +1,58 @@
+.search-area {
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#search {
+    width: 90%;
+    font-size: 1rem;
+    padding-left: 1rem;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    color: white;
+}
+
+#search:focus {
+    border-bottom: 2px solid white;
+}
+
+.filter-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.filters{
+    display: flex;
+    color: white;
+}
+
+.filters label{
+    margin-right: 10px;
+}
+
+.radio-container{
+    margin-left: 30px;
+    margin-top:10px ;
+}
+
+.late-counter{
+    text-align: center;
+    color: red;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.res-found{
+    color: gray;
+    font-weight: 700;
+    text-align: center;
+}
+
+
+.disabled-customer {
+    color: gray;
+}
